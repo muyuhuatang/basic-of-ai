@@ -54,6 +54,45 @@ To further imporve the image quality, i.g. aiming at making the generated pictur
 # Object Detection in Deep Learning
 ## R-CNN
 Full name is Region-CNN, first alogrithm that applied DL into object detection.
+Trianing process of R-CNN is;
+- train AlexNet model on the ImageNet dataset
+- fine-tune the model on the object detection dataset
+- Apply Slective Search method to search the target region, and use the fine-tuned model to extract features in those regions, then store the extracted features
+- Use the stored features to train SVM classifier
+
+Due to the strong feature extraction capability of CNN networks, the R-CNN outperform traditional methods in the VOC 2007 dataset.
+
+However, the shortcoming is that it is relatively computational expensive, because the feature extraction process is for every extracted region.
+
+## Improved R-CNN
+### SPPNet
+Spatial Pyramid Pooling Convolutional Networks, the contribution is that it changed the CNN input size from fixed-size to adjustable-size through ROI Pooling layer, while keeping the output size of CNN remain the same. SPPNet still use the SVM as the classifier. 
+
+Intuitively understanding, in R-CNN, the model extract the feature after selecting the target regions, the convolution happens for each single region separately; in SPPNet, the model execute the convolution computation at first, so it will only need process the convolution computation for once, which saved a lot of time.
+
+### Fast R-CNN / Faster R-CNN
+Different from SPPNet, the Fast R-CNN use the neural network to conduct classification, obtained better acc than SPPNet.
+
+Still, the Faster R-CNN still applied the Slective Search method to located regions, which will cost the quite a few time. So in the Improved version of Faster R-CNN model, it used the RPN (Region Proposal Network) to located the regions, obtained faster speed and better acc.
+
+### RPN (Region Proposal Network)
+Applied the convolution layer to convolute the raw input data features.
+
+## Further readings 
+- R-FCN: object detection via region-based fully convolution networks
+- YOLO: You Only Look Once - Unified, Realy-Time Object Detection
+- SSD: Single Shot MultiBox Detector
+- YOLO9000: Better, Faster, Stronger
+
+# Human Face Detection and recognizetion
+## MTCNN model
+Step: detect all the human faces in the picture, then conduct Face Alignment base on the Landmark point of human faces like eyes, noses, mouthes.
+For the MTCNN, MT means Multi-Task, it contains P-Net, R-Net, O-Net:
+- P-Net, R-Net, O-Net: face classification, bounding box regression, facial landmark localization
+- Difference is that P-Net check the region size of 12x12x3, R-Net check 24x24x3, O-Net check 48x48x3.
+- The prior networks could be perceived as filters, passing the filtered information to the later network, and use the biggest but slower network to give out the final classifications. THus, the overall processing time is reduced
+
+## Loss function design for the human faces
 
 
 
