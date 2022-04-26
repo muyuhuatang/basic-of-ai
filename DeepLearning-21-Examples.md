@@ -92,7 +92,34 @@ For the MTCNN, MT means Multi-Task, it contains P-Net, R-Net, O-Net:
 - Difference is that P-Net check the region size of 12x12x3, R-Net check 24x24x3, O-Net check 48x48x3.
 - The prior networks could be perceived as filters, passing the filtered information to the later network, and use the biggest but slower network to give out the final classifications. THus, the overall processing time is reduced
 
-## Loss function design for the human faces
+## Loss function design for the human faces (ensure the feature extraction quality)
+Requirement:
+- the vectors in the same kinds as close as possible
+- the vectors in the differencet kinds as far as possible 
+
+### Triplet Loss 
+Intuitively, the loss is defined as the distance parameters between both same human face vectors and different human face vectors. In the definition formula, the distance of same human face vectors adding a constant alpha should be no bigger than the distance of different human face vectors (compared with same baseline, so there is three vectors in each calculation), and the loss function records the value of former minus latter when the former is actually bigger (in the perfect setting, it should be smaller).
+
+The triplet loss directly optimize on the distant to solve the feature representation problem of human face recognization. However, the selection of triplet instances could be very triky: if randomly selected, then it would be hard to achieve the best performance after converge; if selected the most hard instances, it would be hard to converge. Thus, one sampling approach is to select the Semi-hard instances to train the model, to help the model obtain good performance while be able to converge. Besides, applying the Triplet Loss would require very large human face datasets to train to get a good result.
+
+### Center Loss
+The center loss do not directly optimize on the distance. It keep the original classification model, but create a class center for each class (in the human face recognization problem, one class present a human). Here, the images in one class should be as close as possible to their class center, and the centers of different classes should be as far as possible. 
+
+The center loss approach do not need the specific sampling method like the triplet loss, and requires less image the well train the models. However, the problem is that if calculate the center in each epoch, it would be too computational expensive, thus one approach is the randomly select the center and learn/update the center location parameter during iterations. Applying the cener loss would help the model to obtain a better discrimitive among different classes.
+
+## Application Scenarios
+- Face Identification: identify if the gicen A, B should be the same person
+- Face Recognition: (most popluar) given one image, detect the best suitable (similar) faces in the database.
+- Face Clustering: clustering the human faces in the database, e.g. through K-Means.
+
+### Famous dataset
+LFW (labeled Faces in the Wild) dataset, obtained from the Internet, containing 13000 human face images labelled with name, more than 1680 people have multiple images collected (open sourced dataset)
+
+### Pipeline
+1. Use the MTCNN model to regonize and uniform the human faces into suitable format.
+2. Use the CNN model, e.g., Iception ResNet v1 to train and test on the LFW dataset (pre-trained by a very large human face dataset, named MS-Celeb-1M) (can also pre-train on the dataset of CASIA-WebFace dataset, containing 494414 images from 10575 people).
+
+# Image Style Transfer
 
 
 
