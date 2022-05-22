@@ -120,6 +120,29 @@ LFW (labeled Faces in the Wild) dataset, obtained from the Internet, containing 
 2. Use the CNN model, e.g., Iception ResNet v1 to train and test on the LFW dataset (pre-trained by a very large human face dataset, named MS-Celeb-1M) (can also pre-train on the dataset of CASIA-WebFace dataset, containing 494414 images from 10575 people).
 
 # Image Style Transfer
+## Image Restore - Image Style Transfer
+Use the Gram metrix to represent the style of the input image, similar to the simple restoring image content
+
+Referring the image content loss, we can define a 'style loss', through the different between the Gram metrix of initial image and restored image, which is to some extent restoring the image by considering primarily the style but not the content.
+
+- image style transfer = image content restore + image style restore
+
+# GAN & DCGAN
+## GAN
+GAN is consists of a Generator and Discriminator, the loss function part is interesting, for Dsicrimiator, it hopes the loss becomes larger, for Generator, it hopes the loss becomes lesser. Thus the trianing process is one step for optimizing D, next step for optimizing G, and then the D, and then the G, ...
+
+## DCGAN
+DC is for Deep Convolutional, where the DCGAN is specifically designed for generating the image samples. 
+
+In the GAN paper, actually they did not made constrains on the structure of D and G. In DCGAN paper, for the image specific purpose, the D and G are both the Convolutional Neural Network. 
+
+Moreover, in G and D:
+- do not use the pooling layer, use the stride method instead
+- apply the Batch Normalization to help the model converge
+- in G, the activate function for last layer is tanh, the rest are all ReLU; in D, all activate functions are Leaky ReLU
+
+# 
+
 
 
 
