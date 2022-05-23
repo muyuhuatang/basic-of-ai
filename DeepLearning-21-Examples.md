@@ -1,4 +1,6 @@
-The example codes of this book is as follows: https://github.com/dailai/DeepLearning-21-Examples. The examples are very representative,
+The example codes of this book is as follows: https://github.com/dailai/DeepLearning-21-Examples. 
+
+The examples are very representative,
  however, the content might be little out-of-date, publised in 2018 and applied based on the python 2. 
  
 Thus, this tutorial will not focus on much on the technicial implementation part, but on the structure of the Deep Learning field and the possible connections 
@@ -141,7 +143,7 @@ Moreover, in G and D:
 - apply the Batch Normalization to help the model converge
 - in G, the activate function for last layer is tanh, the rest are all ReLU; in D, all activate functions are Leaky ReLU
 
-# 
+# pix2pix Model and Auto Color Technique
 
 
 
