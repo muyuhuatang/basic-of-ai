@@ -204,8 +204,80 @@ N vs. 1 RNN structure
 Word embedding normally refers to transfer a word into a vector representation, sometines called word2vec, traidtional methods like CBOW and Skip-Gram. 
 
 ## Why word embedding?
-For the one-hot is completed equally perceive the words in the dictionary, but neglecting the correlations between specific words, 
+For the one-hot is completed equally perceive the words in the dictionary, but neglecting the correlations between specific words. And for the word2vec, it means that to learn a reflection f to represent the word in the vector space. Normally, the dimension of word vectors is much less than the vocabulary. 
+ 
+When using the word2vec represented words, the model could obtain much more abundent word information, and the dimension of input is significantly reduced.
 
+## Foundation Theory of the Word Embedding
+How to learn a good reflection F?
+One way is to count the probability that one word is appearing with other words, and put the often co-occur word in the close place of the vector space; another way is to predict, from one word or several words to predict their possible neighborring words, then the reflection is naturally obtained when doing the orediction. The later method is more welcomed in the traditional approaches, like CBOW and Skip-Gram.
+ 
+## CBOW (Continuous Bag of Words)
+Use the content of one word to predict the word.
+
+However, considering the large amount in dictionary, which could cost a lot time to train the prediction model. So the researcher simplified the model into a bi-classification task between target word and randomly selected noise words.
+ 
+## Skip-Gram
+Opposite to the CBOW method, the Skip-Gram is use the missing word to predict the content words, so it can be percieved as prediction one word based on given one word.
+ 
+## Visualization
+Traditional method is to apply the t-SNE method to convert a high dimensions vector, like 128, into a 2 dimensions vector.
+ 
+# AR models
+The AR (Autoregressive model) is one basic approach to handle the time-serise tasks, for example, LSTM.
+ 
+# Neural Network Machine Translation
+Unlike the traditional methods, the Neural Network Machine Translation Apporach is to first transfer the source input into vectors and then use the model to generate vectors which can then be transfered into the target translation results.
+ 
+## Encoder-Decoder Architecture
+It is also called Seq2Seq model, whcih could effectively solve the in-equal problem between input and output sequence in the N vs. N RNN models.
+ 
+## Attention Mechanism
+In the encoder-decoder architecture, the encoder encode all the input sequence to a uniformed semantic feature c for further decoding, Thus, the lengh of c is the bottleneck of the model's performance. And for the machien translation task, when the input sequence is too long, then the c would be not sufficient to carry all required information.
+ 
+Then the attnetion mechanism solve the problem via providing different c in different time, which means that every c will automatically select the most suiable context for the y. The attnetion scores a(ij) are also 'learnt' by model, it is related to the (i-1)th hidden state of decoder and (j)th hidden state of encoder.
+ 
+# Convert Image to Text
+AKA, the Image Caption task, means that automatically generate a descriptive text for the given image:
+- detection of the objects in the image
+- understanding the relations between detected objects
+- expression by reasonable and meaningful descriptions
+
+## Encoder-Decoder Architecture with CNN-encoder and RNN-decoder
+Use the CNN to extract the information and feature with the given image.
+
+### Adding Attention Mechanism
+Paper 'Show, Attent and Tell: Neural Image Caption Generation with Visual Attention'
+ 
+### Adding high-level Semantic
+Here, the high-level semantic can be seen as one multi-label classification task, which is representing what objects exist in the given image.
+
+# Q learning
+For Reinforcement Learning, studying given environment conditions how to maximize the rewards. Agent, Environment, Action, Reward.
+During the updating process of Q learning, every step the instruction is to select the next step action based on the current state and Q function values. The Q(s,a) is the expected reward value that execute the a action in the s state.
+
+# SARSA Algorithm
+SARSA (State-Action-Reward-State-Action) algorithm is one basic reinforcement learning algorithm. Similar to Q learning, it is also recurrently learning the Q function during the Agent conducting Action in the Environment.
+The difference is that, in Q learning using epsillon-greedy to select the next step action, the agent might not execute the max_action; while for SARSA algorithm, the next action will definitely be the selected new_action. (off-policy vs. on-policy)
+ 
+Intuitively understanding, the SARSA alogrithm is less aggressive than Q learning. Q Learning will use the Q[new_state, :].max() to update the Q value, which means that it is considering the maximize reward without much the risks behind the new states. However, the SARSA algorithm is only using Q[new_state, new_action] to update Q value, means that it will consider more about the possible negative rewards condition, thus the agent will hold still in the maze problem, and consequently harder to find the ultimite 'treasure in the maze'.
+ 
+# Deep Q Learning
+The advanced version of vanilla Q Learning, it use the deep neural networks to represent the Q function. 
+The aim is to automatically learn how to play the video game from the initial scene of video games. The algorithm can only get the video game screen and the rewards of the game, while the more detailed information of the video game play is not provided.
+ 
+Here the DQN (Deep Q Network) use the deep convolutional neural network to represent the Q function. The input is the the state s, the output is the Q values of every action. The input state is not one frame of the video game, but multiple frames of the video game play. 
+ 
+## Experience Replay Mechanism
+To generate the training samples for the designed DQN. The agent will firstly try to play the game and accumulate the experience as a 'pool', i.g., D={e(1),e(2),...,e(N)}. The ei = (s(t),a(t),r(t),s(t+1)), where the s(t) is the state in the time t, a(t) is the action in time t, r(t) is the award vaule here, and the s(t+1) is the next time state. 
+ 
+# Policy Gradient Algorithm
+For the reinforcement learning algorithm, the aim is to learn a value function Q(state, action). In the environment, the first is to confirm the current state and then choose one action with relatively high reward based on the Q(state, action) fucntion. The policy gradient method here is different, it will not learn the value function Q, instead, it will use the model (e.g., neural networks) to output the required actions.
+ 
+Unlike the DQN, the Policy Network get the input of current state, but output the best next action (the action itself or the probility of the certain action).
+ 
+## A (Advantage)
+Set this to indicate whether the selected action a is the 'correct action' or 'wrong action' (mostly based on whether the game will fail).
 
 
 
