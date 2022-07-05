@@ -1,4 +1,4 @@
-The example codes of this book is as follows: https://github.com/dailai/DeepLearning-21-Examples. 
+The example codes of the book, <DeepLearning-21-Examples>, is as follows: https://github.com/dailai/DeepLearning-21-Examples. 
 
 The examples are very representative,
  however, the content might be little out-of-date, publised in 2018 and applied based on the python 2. 
@@ -144,6 +144,74 @@ Moreover, in G and D:
 - in G, the activate function for last layer is tanh, the rest are all ReLU; in D, all activate functions are Leaky ReLU
 
 # pix2pix Model and Auto Color Technique
+## cGAN
+We can easliy use the GAN to conduct unsupervised learning, and then generate the new samples. Still, it is unable to exactly control the type of the generated new samples. For example, the vanilla GAN can not generate specific MNIST numbers like 2, the generation results are random.
+
+Thus, the cGAN (Conditional Generative Adversarial Networks), it add the additional condition y to both Generator and Discriminator, which is the aimed the specific target (or to say the condition). The Generator G should then generate the new samples that match the condition y, and the Discriminator should discriminate both whether the generated image is really and whether the generate is matching the condition y.
+
+## pix2pix
+Just like the machine translation that translate one natural language to another natural language in the NLP field, there is also the 'image translate' tasks like 'day to night', 'BW to color', 'aerial to map', 'edges to photo'. 
+
+When experimenting the different loss functions like L1, Loss of cGAN, L1 + loss of cGAN, find out that if only us ethe L1, the generated images would be very vague, loss of cGAN is much better, and L1 + loss of cGAN is only slightly better than only loss of cGAN.
+
+Besides, the pix2pix model also proposed the concept PatchGAN during improving the Discriminator, which is calculating and averaging the probilities for small NxN patches but not whole image. The PatchGAN could help to accelerate the calculation speed and converge process. As for the result, when choosing an adequate patch size, like 70x70 to 256x256, the generated images is not far from when using the whole image to calculate the probility.
+
+In short, the pix2pix model is still a cGAN, but modified specifically for the image translation tasks.
+
+# Super-resolution
+Based on the pix2pix model that has just been introduced.
+
+## Dataset
+COCO dataset 2014
+
+# CycleGAN & Unpaired Image Translation
+The motivation is that in the really world, the paired image dataset is hard to collect, and sometime do not need that fine-grained dataset, like for the photo to oil painting translation. 
+
+The CycleGAN is capable of using unpaired data to obtain a reflection F from X space to Y space compared to pix2pix model. 
+
+The difficulty here is that the reflection F may reflect all the x in X space into one y in the Y space. Thus the author introduce the 'cycle consistency loss' to define another reflection G that from Y space to X space and make the F(G(y)) ~ y and G(F(x)) ~ x, which means that the x to y can be reversed back to original x again. 
+
+## NOTE
+Since the training process of GAN model is initially randomed, thus if find some picture output during training is opposite to the aim (like aim at light color but generating the dark color), should stop trianing and re-start the training from the begining.
+
+# RNN and CharRNN (text generation)
+The structure is specially designed for the sequence data, like natural language text, audio and time series (like stock).
+
+The parameters used in each recurrent steps are shared (same matrix). 
+
+In the vanilla structure of RNN model, the lengh of the input and output sequence should be equal. 
+
+## N vs. 1 RNN
+Here, only need to make the output after the last point of the vanilla sequence output structure.
+
+## 1 vs. N RNN
+Here, only input one datapoint, or use the same input data point in every recurrent steps.
+
+Application scenarios: 
+- image to text (image caption)
+- use the type (keywords) to generate auto or music
+
+## LSTM (Long Short-Term Memory)
+Considering the gradient vanishing or exploding problem, the LSTM use the add function to replace the recurrenting matrix multiple process to diminish the gradient vanishing problem, and make the neural network to learn the long term features.
+
+## Char RNN (N vs. N)
+Use the model to predict the next Char based on the inputted Char, e.g., {h,e,l,l,o} -> {e,l,l,o,!}
+
+# Sequence Classification Problem
+N vs. 1 RNN structure
+
+# Word Vectors and Word Embeddings
+Word embedding normally refers to transfer a word into a vector representation, sometines called word2vec, traidtional methods like CBOW and Skip-Gram. 
+
+## Why word embedding?
+For the one-hot is completed equally perceive the words in the dictionary, but neglecting the correlations between specific words, 
+
+
+
+
+
+
+
 
 
 
