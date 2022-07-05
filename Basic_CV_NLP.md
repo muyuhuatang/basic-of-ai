@@ -1,4 +1,4 @@
-The example codes of the book, <DeepLearning-21-Examples>, is as follows: https://github.com/dailai/DeepLearning-21-Examples. 
+The example codes of the book, \<DeepLearning-21-Examples\>, is as follows: https://github.com/dailai/DeepLearning-21-Examples. 
 
 The examples are very representative,
  however, the content might be little out-of-date, publised in 2018 and applied based on the python 2. 
